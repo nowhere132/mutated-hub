@@ -1,0 +1,17 @@
+{
+  "name": "mutated-hub",
+  "version": "0.1.0",
+  "main": "index.ts",
+  "author": "nowhere132 <canh.manh123@gmail.com>",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.7.2"
+  }
+}
