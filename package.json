@@ -1,17 +1,22 @@
 {
   "name": "mutated-hub",
   "version": "0.1.0",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "author": "nowhere132 <canh.manh123@gmail.com>",
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "dev": "ts-node index.ts"
+    "dev": "./node_modules/.bin/dotenvx run -- ts-node src/index.ts"
   },
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
     "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.32.0",
+    "express": "^4.21.2"
   }
 }
