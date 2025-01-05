@@ -60,4 +60,13 @@ yarn add -D typescript @types/node ts-node tsc
 ```
 These four packages will appear under `devDependencies` in the `package.json` file. As the name implies, they are meant to improve your development experience but are not required for production environments.
 
+## K6
+`k6` is an extremely developer-friendly load testing tool, especially when compared to the widely known JMeter. With just a simple JS script, you can dive right in.
+
+### Installation
+The installation guide is available at: https://grafana.com/docs/k6/latest/set-up/install-k6/
+
+### Usage
+Once k6 is successfully installed on your machine, start the server using `yarn dev` and test the health check endpoint by running `k6 run test/script.js`. You can experiment with varying numbers of virtual users (VUs), such as 100, 1000, or 10000, to observe the application's limits.  
+
 ## FAQ
