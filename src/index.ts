@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import router from './router';
 
 const PORT = process.env.APP_SERVER_PORT;
 
@@ -17,9 +18,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get('/health', (req, res) => {
-  res.send('OK');
-});
+app.use('/', router);
 
 app.listen(PORT, () => {
   console.log(`Server started at port ${PORT}`);
