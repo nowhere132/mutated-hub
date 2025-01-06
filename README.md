@@ -26,6 +26,7 @@ Incoming Features
 - [ ] Implement capability #5
 - [ ] Add user authentication using JWT
 - [ ] Create custom decorators to replicate NestJS coding style
+- [ ] Show colorful logs using morgan and chalk
 
 Low-Priority Tasks
 - [ ] Research and document the feasibility and approach for capability #6
