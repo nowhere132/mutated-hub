@@ -1,8 +1,6 @@
-const collect = async (
-  link: string,
-  description: string | undefined,
-  tags: string[] | undefined,
-): Promise<number> => {
+import { CollectGraceDto } from './graces.interface';
+
+const collect = async (req: CollectGraceDto): Promise<number> => {
   return Promise.resolve(1);
 };
 
