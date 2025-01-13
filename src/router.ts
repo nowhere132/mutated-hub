@@ -4,12 +4,15 @@ import { validateData } from './middlewares/validationMiddleware';
 import { collectGraceSchema } from './modules/graces/dto/collect-grace.dto';
 import { enhanceGraceSchema } from './modules/graces/dto/enhance-grace.dto'
 import { getPgPool } from './database/datasource';
+import { showGraceSchema } from './modules/graces/dto/show-grace.dto';
 // import { showSchema } from ';
 const router = express.Router();
 
 router.get('/health', (req, res) => {
   res.send('OK');
 });
+
+router.get('/graces/search', validateData(showGraceSchema), gracesController.show);
 
 router.post('/graces', validateData(collectGraceSchema), gracesController.collect);
 
@@ -34,7 +37,6 @@ router.get('/schema', async(req, res) => {
   }
 });
 
-router.patch('/graces', validateData(enhanceGraceSchema), gracesController.enhance)
-
+router.patch('/graces', validateData(enhanceGraceSchema), gracesController.enhance);
 
 export default router;
