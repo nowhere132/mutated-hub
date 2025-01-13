@@ -1,5 +1,5 @@
 import { getPgPool } from '../../database/datasource';
-import { CollectGraceDto, EnhanceGraceDto } from './graces.interface';
+import { CollectGraceDto, EnhanceGraceDto, ShowGraceDto } from './graces.interface';
 
 const collect = async (req: CollectGraceDto): Promise<number> => {
   try {
@@ -19,7 +19,7 @@ const collect = async (req: CollectGraceDto): Promise<number> => {
 
 const enhance = async (req: EnhanceGraceDto): Promise<number> => {
   try {
-    const pool = getPgPool(); 
+    const pool = getPgPool(); // ?
     await pool.query('SELECT graces_enhance($1, $2, $3)', [
       req.id, 
       req.description, 
@@ -32,6 +32,27 @@ const enhance = async (req: EnhanceGraceDto): Promise<number> => {
   }
 };
 
-const show = async () => {};
+// i used to think that this function is to get all the details of an item 
+// by id, but second thought makes me think this is not a very useful feature
+// show() is more likely to query/filter by tags/keyword --> do that 
+const show = async (req: ShowGraceDto)=> {
+  try {
+    // const { search, tags } = req; 
+    const tagsArr = req.tags ? req.tags.split(',') : null; 
+
+    const pool = getPgPool(); 
+    const result = await pool.query(
+      'SELECT * FROM graces_show($1, $2)', [
+        req.search || null, 
+        tagsArr 
+      ]
+    );
+
+    return result.rows; 
+  } catch (err) {
+    console.warn('query graces failed: ', err); 
+    return null; 
+  }
+};
 
 export { collect, enhance, show };

@@ -1,6 +1,6 @@
 import express from 'express';
 import * as gracesService from './graces.service';
-import { CollectGraceDto, EnhanceGraceDto } from './graces.interface';
+import { CollectGraceDto, EnhanceGraceDto, ShowGraceDto } from './graces.interface';
 
 const collect = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const id = await gracesService.collect(req.body as CollectGraceDto);
@@ -13,4 +13,10 @@ const enhance = async (req: express.Request, res: express.Response, next: expres
   res.send({ success: result !== -1 });
 };
 
-export { collect, enhance };
+const show = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  // express stores search query into req.query
+  const result = await gracesService.show(req.query as ShowGraceDto); 
+  res.send({ result });
+};
+
+export { collect, enhance, show };
