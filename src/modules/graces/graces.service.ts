@@ -4,13 +4,13 @@ import { CollectGraceDto, EnhanceGraceDto, ShowGraceDto } from './graces.interfa
 const collect = async (req: CollectGraceDto): Promise<number> => {
   try {
     const pool = getPgPool();
-    await pool.query('SELECT graces_collect($1, $2, $3, $4)', [
+    const result = await pool.query('SELECT graces_collect($1, $2, $3, $4)', [
       req.link,
       req.description,
       req.tags,
       'manhthd',
     ]);
-    return 1; // ? why not 0 
+    return result.rows[0].graces_collect; 
   } catch (err) {
     console.warn('collect graces failed: ', err);
     return -1;
@@ -19,13 +19,13 @@ const collect = async (req: CollectGraceDto): Promise<number> => {
 
 const enhance = async (req: EnhanceGraceDto): Promise<number> => {
   try {
-    const pool = getPgPool(); // ?
-    await pool.query('SELECT graces_enhance($1, $2, $3)', [
+    const pool = getPgPool(); 
+    const result = await pool.query('SELECT graces_enhance($1, $2, $3)', [
       req.id, 
       req.description, 
       req.tags,
     ]);
-    return 1; // mimic
+    return 0; 
   } catch (err) {
     console.warn('enhance graces failed: ', err); 
     return -1; 
@@ -36,8 +36,7 @@ const enhance = async (req: EnhanceGraceDto): Promise<number> => {
 // by id, but second thought makes me think this is not a very useful feature
 // show() is more likely to query/filter by tags/keyword --> do that 
 const show = async (req: ShowGraceDto)=> {
-  try {
-    // const { search, tags } = req; 
+  try { 
     const tagsArr = req.tags ? req.tags.split(',') : null; 
 
     const pool = getPgPool(); 
