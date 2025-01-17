@@ -17,7 +17,7 @@ const app = express();
 
 app.use(cors(corsOptions));
 
-// In the past, I typically used the body-parser package. 
+// In the past, I typically used the body-parser package.
 // However, since ExpressJS 4, the .json() function has been included, which internally refers to that package
 // Ref: https://github.com/expressjs/express/blob/318fd4b543ffbebf97bf0b6c49188afae45741f5/lib/express.js#L77
 app.use(express.json());
