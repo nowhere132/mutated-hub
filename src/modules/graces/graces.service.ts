@@ -17,15 +17,15 @@ const collect = async (req: CollectGraceDto): Promise<number> => {
   }
 };
 
-const enhance = async (req: EnhanceGraceDto): Promise<number> => {
+const enhance = async (graceId: number, req: EnhanceGraceDto): Promise<number> => {
   try {
     const pool = getPgPool();
     const result = await pool.query('SELECT graces_enhance($1, $2, $3)', [
-      req.id,
+      graceId,
       req.description,
       req.tags,
     ]);
-    return 0;
+    return result.rows[0].graces_enhance;
   } catch (err) {
     console.warn('enhance graces failed: ', err);
     return -1;

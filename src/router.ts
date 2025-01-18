@@ -15,6 +15,6 @@ router.get('/graces/search', validateData(showGraceSchema), gracesController.sho
 
 router.post('/graces', validateData(collectGraceSchema), gracesController.collect);
 
-router.patch('/graces', validateData(enhanceGraceSchema), gracesController.enhance);
+router.patch('/graces/:id', validateData(enhanceGraceSchema), gracesController.enhance);
 
 export default router;
