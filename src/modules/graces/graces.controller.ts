@@ -16,7 +16,7 @@ const collect = async (req: express.Request, res: express.Response, next: expres
 const enhance = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const graceId = +req.params.id;
   const result = await gracesService.enhance(graceId, req.body as EnhanceGraceDto);
-  res.send({ success: result });
+  res.send({ success: result !== -1 });
 };
 
 const show = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
