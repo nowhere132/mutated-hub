@@ -1,5 +1,12 @@
 import { getPgPool } from '../../database/datasource';
-import { CollectGraceDto, EnhanceGraceDto, ShowGraceDto } from './graces.interface';
+import { 
+  CollectGraceDto, 
+  EnhanceGraceDto, 
+  ShowGraceDto, 
+  LinkGraceDto, 
+  GetConnectionsGraceDto, 
+  GraceNode
+} from './graces.interface';
 
 const collect = async (req: CollectGraceDto): Promise<number> => {
   try {
@@ -52,4 +59,56 @@ const show = async (req: ShowGraceDto) => {
   }
 };
 
-export { collect, enhance, show };
+const link = async (req: LinkGraceDto): Promise<number> => {
+  try {
+    const pool = getPgPool(); 
+    await pool.query('SELECT * FROM graces_link($1, $2)', [
+      req.from_grace_id, 
+      req.to_grace_id
+    ]);
+    return 0;
+  } catch (err) {
+    console.warn('link graces failed: ', err);
+    return -1;
+  }
+}; 
+
+const unlink = async (req: LinkGraceDto): Promise<number> => {
+  try {
+    const pool = getPgPool(); 
+    await pool.query('SELECT * FROM graces_unlink($1, $2)', [
+      req.from_grace_id, 
+      req.to_grace_id
+    ]);
+    return 0;
+  } catch (err) {
+    console.warn('unlink graces failed: ', err);
+    return -1;
+  }
+}; 
+
+// cannot name a function `delete` -- rserved word 
+const delet = async (id: number): Promise<number> => {
+  try {
+    const pool = getPgPool(); 
+    await pool.query('SELECT graces_delete($1)', [id]);
+    return 0; 
+  } catch (err) {
+    console.warn('delete grace failed: ', err);
+    return -1;
+  }
+}; 
+
+const getConnections = async (id: number): Promise<GraceNode | null> => {
+  try {
+    const pool = getPgPool(); 
+    const result = await pool.query('SELECT * FROM graces_get_connections($1)', [id]);
+    console.debug(result); 
+    return result.rows[0];
+  } catch (err) {
+    console.warn('get grace node information failed: ', err);
+    return null;
+  }
+}; 
+
+export { collect, enhance, show, link, unlink, delet, getConnections };

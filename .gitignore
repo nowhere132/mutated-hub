@@ -36,3 +36,5 @@ package-lock.json
 .adminjs/
 
 lp/
+node_modules
+shell.nix
