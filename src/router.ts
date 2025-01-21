@@ -14,6 +14,7 @@ router.get('/health', (req, res) => {
 
 // ----- no param gang -----
 router.get('/graces/search', validateData(showGraceSchema), gracesController.show);
+router.get('/graces/graph', gracesController.getKnowledgeGraph);
 router.post('/graces', validateData(collectGraceSchema), gracesController.collect);
 router.post('/graces/link', validateData(linkGraceSchema), gracesController.link); 
 router.delete('/graces/link', validateData(linkGraceSchema), gracesController.unlink); 

@@ -37,3 +37,18 @@ export interface GraceNode {
   }>;
 }
 
+export interface KnowledgeGraph {
+  nodes: Array<{
+    id: string;
+    data: {
+      label: string;
+      description?: string;
+      tags?: string[];
+    };
+  }>;
+  edges: Array<{
+    id: string;
+    source: string;
+    target: string;
+  }>;
+}

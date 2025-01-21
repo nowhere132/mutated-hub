@@ -57,4 +57,9 @@ const getConnections = async (req: express.Request, res: express.Response, next:
   res.send(result); 
 }; 
 
-export { collect, enhance, show, link, unlink, delet, getConnections };
+const getKnowledgeGraph = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const result = await gracesService.getKnowledgeGraph();
+  res.send(result);
+};
+
+export { collect, enhance, show, link, unlink, delet, getConnections, getKnowledgeGraph };

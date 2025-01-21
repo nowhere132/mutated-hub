@@ -5,7 +5,8 @@ import {
   ShowGraceDto, 
   LinkGraceDto, 
   GetConnectionsGraceDto, 
-  GraceNode
+  GraceNode,
+  KnowledgeGraph
 } from './graces.interface';
 
 const collect = async (req: CollectGraceDto): Promise<number> => {
@@ -111,4 +112,39 @@ const getConnections = async (id: number): Promise<GraceNode | null> => {
   }
 }; 
 
-export { collect, enhance, show, link, unlink, delet, getConnections };
+const getKnowledgeGraph = async (): Promise<KnowledgeGraph> => {
+  try {
+    const pool = getPgPool();
+    
+    // First get all nodes
+    const nodesResult = await pool.query(`
+      SELECT 
+        id::TEXT,
+        jsonb_build_object(
+          'label', g.link,
+          'description', g.description,
+          'tags', g.tags
+        ) as data
+      FROM graces g
+    `);
+    
+    // Then get all edges
+    const edgesResult = await pool.query(`
+      SELECT 
+        gp.from_grace_id::TEXT as source,
+        gp.to_grace_id::TEXT as target,
+        (gp.from_grace_id::TEXT || '-' || gp.to_grace_id::TEXT) as id
+      FROM graces_pointers gp
+    `);
+
+    return {
+      nodes: nodesResult.rows,
+      edges: edgesResult.rows
+    };
+  } catch (err) {
+    console.warn('fetch graph failed:', err);
+    return { nodes: [], edges: [] };
+  }
+};
+
+export { collect, enhance, show, link, unlink, delet, getConnections, getKnowledgeGraph };

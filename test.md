@@ -50,6 +50,13 @@ curl -X POST "http://127.0.0.1:3000/graces/link" \
     "to_grace_id": 6
   }'
 
+curl -X POST "http://127.0.0.1:3000/graces/link" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "from_grace_id": 1,
+    "to_grace_id": 10
+  }'
+
 # 4. unlink 2 nodes -- DELETE /graces/link
 ```
 router.delete('/graces/link', validateData(linkGraceSchema), gracesController.unlink); 
